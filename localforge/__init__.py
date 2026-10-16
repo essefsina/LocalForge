@@ -3,4 +3,4 @@ from .gpu import detect_gpus, primary_gpu
 from .models import recommend
 
 __all__ = ["detect_gpus", "primary_gpu", "recommend"]
-__version__ = "0.2.0"
+__version__ = "0.2.1"

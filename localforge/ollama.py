@@ -37,6 +37,9 @@ def running() -> list[dict]:
 def pull_stream(model: str):
     """Yield raw status dicts from Ollama as the pull progresses.
 
+    Raises RuntimeError if Ollama reports the pull failed — callers must
+    not treat a dead stream as success.
+
     Typical updates look like:
       {"status": "pulling manifest"}
       {"status": "downloading", "total": 4835941252, "completed": 123456}
@@ -49,7 +52,10 @@ def pull_stream(model: str):
         r.raise_for_status()
         for line in r.iter_lines():
             if line.strip():
-                yield json.loads(line)
+                data = json.loads(line)
+                if data.get("status") == "error":
+                    raise RuntimeError(data.get("error") or "Ollama reported a pull error")
+                yield data
 
 
 def chat(model: str, messages: list[dict]) -> str:

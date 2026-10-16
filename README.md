@@ -25,7 +25,7 @@ curl -fsSL https://ollama.com/install.sh | sh
 **2. Install LocalForge:**
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/localforge.git
+git clone https://github.com/essefsina/LocalForge.git
 cd localforge
 pip install -r requirements.txt
 ```

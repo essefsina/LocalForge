@@ -47,6 +47,21 @@ def _do_pull(model: str) -> None:
         with _pull_lock:
             state["status"] = "error"
             state["detail"] = str(exc)
+        return
+
+    # The stream ended — but only trust it if the model actually landed
+    # in Ollama. A silent/early end of stream is not a success.
+    try:
+        installed = [m["name"] for m in ollama.list_installed()]
+    except Exception:  # noqa: BLE001
+        installed = []
+    if model not in installed:
+        with _pull_lock:
+            state["status"] = "error"
+            state["detail"] = (
+                "Ollama finished without installing the model. "
+                "Check disk space and connection, then try again."
+            )
 
 
 class PullRequest(BaseModel):
