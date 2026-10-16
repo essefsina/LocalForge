@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 
 from . import __version__
+from .gpu import detect_gpus
 
 
 def main() -> None:
@@ -21,6 +22,19 @@ def main() -> None:
     from .server import app
 
     print(f"🔥 LocalForge v{__version__} → http://{args.host}:{args.port}")
+
+    # State the GPU situation up front: on machines without an NVIDIA GPU
+    # the dashboard still runs, but model recommendations need one.
+    gpus = detect_gpus()
+    if gpus:
+        names = ", ".join(f"{g.name} ({g.vram_total_gb} GB VRAM)" for g in gpus)
+        print(f"🖥️  GPU: {names}")
+    else:
+        print(
+            "⚠️  No NVIDIA GPU detected — dashboard runs in CPU-only mode; "
+            "model recommendations are unavailable without a GPU."
+        )
+
     uvicorn.run(app, host=args.host, port=args.port, log_level="warning")
 
 
