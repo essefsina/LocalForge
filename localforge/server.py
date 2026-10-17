@@ -75,7 +75,27 @@ class ChatRequest(BaseModel):
 
 @app.get("/api/health")
 def health() -> dict:
-    return {"ok": True, "ollama": ollama.is_available()}
+    return {
+        "ok": True,
+        "ollama": ollama.is_available(),
+        "ollama_installed": ollama.is_installed(),
+    }
+
+
+def _ollama_unavailable() -> HTTPException:
+    """503 with guidance matched to the actual problem.
+
+    "Not installed" points at the download page; "not running" points at
+    `ollama serve`. Callers should raise this instead of surfacing a raw
+    connection error.
+    """
+    if not ollama.is_installed():
+        return HTTPException(
+            503,
+            f"Ollama isn't installed. Download it from {ollama.DOWNLOAD_URL}, "
+            "then run `ollama serve`.",
+        )
+    return HTTPException(503, "Ollama is not running. Start it first: `ollama serve`")
 
 
 @app.get("/api/gpu")
@@ -104,7 +124,7 @@ def models() -> dict:
 def pull(req: PullRequest) -> dict:
     """Start pulling a model in the background; poll /api/pull/status."""
     if not ollama.is_available():
-        raise HTTPException(503, "Ollama is not running. Start it first: `ollama serve`")
+        raise _ollama_unavailable()
     with _pull_lock:
         existing = _pull_state.get(req.model)
         if existing and existing["status"] == "pulling":
@@ -137,7 +157,7 @@ def pull_status(model: str) -> dict:
 @app.post("/api/chat")
 def chat(req: ChatRequest) -> dict:
     if not ollama.is_available():
-        raise HTTPException(503, "Ollama is not running. Start it first: `ollama serve`")
+        raise _ollama_unavailable()
     try:
         reply = ollama.chat(req.model, req.messages)
     except Exception as exc:  # noqa: BLE001
