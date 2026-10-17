@@ -1,0 +1,18 @@
+[
+  "tests/test_catalog.py::test_24gb_gpu_fits_gemma3_27b",
+  "tests/test_catalog.py::test_8gb_gpu_excludes_14b_reasoners",
+  "tests/test_catalog.py::test_new_models_present_with_verified_params",
+  "tests/test_catalog.py::test_params_parse_for_sorting",
+  "tests/test_catalog.py::test_vram_ordering_sane",
+  "tests/test_gpu_parse.py::test_blank_output_means_no_gpus",
+  "tests/test_gpu_parse.py::test_gpuinfo_derived_properties",
+  "tests/test_gpu_parse.py::test_malformed_lines_are_skipped",
+  "tests/test_gpu_parse.py::test_no_smi_means_no_gpus",
+  "tests/test_gpu_parse.py::test_primary_gpu_is_first",
+  "tests/test_gpu_parse.py::test_two_gpus_parsed",
+  "tests/test_recommend.py::test_24gb_gpu_fits_32b",
+  "tests/test_recommend.py::test_8gb_gpu_gets_mid_size_pick",
+  "tests/test_recommend.py::test_catalog_has_entries",
+  "tests/test_recommend.py::test_no_gpu_means_no_fits",
+  "tests/test_recommend.py::test_progress_pct"
+]
