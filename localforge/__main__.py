@@ -14,6 +14,8 @@ def main() -> None:
     )
     parser.add_argument("--host", default="127.0.0.1", help="Bind host (default: 127.0.0.1)")
     parser.add_argument("--port", type=int, default=8000, help="Bind port (default: 8000)")
+    parser.add_argument("--verbose", "-v", action="store_true",
+                        help="Verbose output: INFO-level logs plus the uvicorn access log")
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     args = parser.parse_args()
 
@@ -35,7 +37,10 @@ def main() -> None:
             "model recommendations are unavailable without a GPU."
         )
 
-    uvicorn.run(app, host=args.host, port=args.port, log_level="warning")
+    # Keep startup quiet by default; --verbose turns on the access log.
+    log_level = "info" if args.verbose else "warning"
+    uvicorn.run(app, host=args.host, port=args.port,
+                log_level=log_level, access_log=args.verbose)
 
 
 if __name__ == "__main__":
