@@ -75,7 +75,14 @@ class ChatRequest(BaseModel):
 
 @app.get("/api/health")
 def health() -> dict:
-    return {"ok": True, "ollama": ollama.is_available()}
+    return {
+        "ok": True,
+        "ollama": ollama.is_available(),
+        "ollama_version": ollama.server_version(),
+        # Empty list = every endpoint still matches the API shape this
+        # client was written against; non-empty = version drift.
+        "api_warnings": ollama.api_shape_warnings(),
+    }
 
 
 @app.get("/api/gpu")

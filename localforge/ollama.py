@@ -22,6 +22,49 @@ def is_available() -> bool:
         return False
 
 
+def server_version() -> str | None:
+    """Ollama server version from GET /api/version, e.g. "0.12.3".
+
+    Returns None when Ollama is unreachable or the response is unexpected.
+    Never raises.
+    """
+    try:
+        r = _client.get(f"{BASE_URL}/api/version", timeout=5.0)
+        r.raise_for_status()
+        data = r.json()
+        version = data.get("version") if isinstance(data, dict) else None
+        return version if isinstance(version, str) else None
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def api_shape_warnings() -> list[str]:
+    """Detect Ollama version drift on the endpoints LocalForge parses.
+
+    Probes /api/tags and /api/ps and reports any whose JSON no longer has
+    the expected shape (an object with a "models" list). A drift warning
+    means the running Ollama server changed its API relative to the
+    version this client was written against, so callers should surface it
+    instead of silently mis-parsing. Never raises.
+    """
+    warnings: list[str] = []
+    for endpoint in ("/api/tags", "/api/ps"):
+        try:
+            r = _client.get(f"{BASE_URL}{endpoint}", timeout=5.0)
+            r.raise_for_status()
+            data = r.json()
+        except Exception:  # noqa: BLE001 - probe, not an operation
+            warnings.append(
+                f"Ollama {endpoint} did not respond — can't verify its API shape")
+            continue
+        if not isinstance(data, dict) or not isinstance(data.get("models"), list):
+            warnings.append(
+                f"Ollama {endpoint} returned an unexpected shape "
+                f"(expected a JSON object with a 'models' list) — "
+                f"the server version may have changed the API")
+    return warnings
+
+
 def list_installed() -> list[dict]:
     r = _client.get(f"{BASE_URL}/api/tags")
     r.raise_for_status()
