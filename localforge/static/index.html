@@ -64,6 +64,8 @@
   <div class="pill" id="ollama-pill">checking Ollama…</div>
 </header>
 <main>
+  <div class="card" id="ollama-card" style="display:none;border-color:var(--accent);margin-bottom:6px"></div>
+
   <h2>Your GPU</h2>
   <div class="card" id="gpu-card"><p class="hint">Detecting hardware…</p></div>
 
@@ -113,8 +115,31 @@ async function loadHealth() {
     const pill = $("#ollama-pill");
     pill.textContent = h.ollama ? "● Ollama running" : "● Ollama not running";
     pill.className = "pill " + (h.ollama ? "on" : "off");
+    showOllamaCard(h);
     return h.ollama;
   } catch { $("#ollama-pill").textContent = "● backend offline"; return false; }
+}
+
+function showOllamaCard(h) {
+  const card = $("#ollama-card");
+  if (h.ollama) { card.style.display = "none"; return; }
+  if (!h.ollama_installed) {
+    card.innerHTML = `<div style="font-weight:800;font-size:17px;margin-bottom:8px">🛠️ Ollama isn't installed</div>
+      <p class="hint" style="margin-top:0">LocalForge needs Ollama (the free engine that runs the models) to do anything useful.</p>
+      <div class="row" style="margin-top:12px">
+        <a href="https://ollama.com/download" target="_blank" rel="noopener" style="cursor:pointer;border:none;border-radius:9px;padding:9px 16px;font-weight:700;font-size:13px;background:var(--accent);color:#14100a;text-decoration:none;display:inline-block">⬇ Download Ollama</a>
+        <button class="ghost" onclick="loadHealth()">↻ I installed it — check again</button>
+      </div>
+      <p class="hint">After installing, start it with <code>ollama serve</code> (or just open the Ollama app), then hit check again.</p>`;
+  } else {
+    card.innerHTML = `<div style="font-weight:800;font-size:17px;margin-bottom:8px">💤 Ollama isn't running</div>
+      <p class="hint" style="margin-top:0">It's installed — it just needs to be started.</p>
+      <div class="row" style="margin-top:12px">
+        <button class="ghost" onclick="loadHealth()">↻ I started it — check again</button>
+      </div>
+      <p class="hint">Open a terminal and run <code>ollama serve</code> (or open the Ollama app), then hit check again.</p>`;
+  }
+  card.style.display = "block";
 }
 
 async function loadGPU() {
