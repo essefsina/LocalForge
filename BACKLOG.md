@@ -32,7 +32,9 @@ items, alternating repos when possible. Never invent filler.
         (https://github.com/essefsina/DropIt/tree/cron/2026-10-17-contributing).
         PR: https://github.com/essefsina/DropIt/pull/2 (opened 2026-10-17).
 - [ ] Add screenshots to README.md (drop 2-3 into docs/ and link them)
-- [ ] Docstrings + type hints pass over dropit_mt.py public functions
+- [x] Docstrings + type hints pass over dropit_mt.py public functions
+      → branch `cron/2026-10-19-mt-docs`.
+        PR: https://github.com/essefsina/DropIt/pull/5 (opened 2026-10-19).
 - [ ] Handle translation of very long files: stream results per chunk into
       the modal instead of one blocking call
 - [ ] Add a "clear translation packs" maintenance button (frees mt_models/)
@@ -40,7 +42,9 @@ items, alternating repos when possible. Never invent filler.
       wraps or scrolls correctly under 360px)
 - [ ] Log translation pack size before download; skip with a clear message
       if the disk has insufficient space
-- [ ] Add `--version` CLI flag to dropit.py / app.py
+- [x] Add `--version` CLI flag to dropit.py / app.py
+      → branch `cron/2026-10-19-version-flag`.
+        PR: https://github.com/essefsina/DropIt/pull/6 (opened 2026-10-19).
 - [ ] Rate-limit /api/aitranslate per IP (avoid one phone hammering the PC)
 
 ## LocalForge
@@ -70,8 +74,12 @@ items, alternating repos when possible. Never invent filler.
       → branch `cron/2026-10-18-ollama-version`
         (https://github.com/essefsina/LocalForge/tree/cron/2026-10-18-ollama-version).
         PR: https://github.com/essefsina/LocalForge/pull/3 (opened 2026-10-18).
-- [ ] Add `CONTRIBUTING.md`
-- [ ] Cache the model catalog locally so the dashboard renders offline
+- [x] Add `CONTRIBUTING.md`
+      → branch `cron/2026-10-19-contributing`.
+        PR: https://github.com/essefsina/LocalForge/pull/6 (opened 2026-10-19).
+- [x] Cache the model catalog locally so the dashboard renders offline
+      → branch `cron/2026-10-19-offline-cache`.
+        PR: https://github.com/essefsina/LocalForge/pull/5 (opened 2026-10-19).
 - [x] Add request logging (uvicorn-style access log) behind a --verbose flag
       → branch `cron/2026-10-18-verbose`
         (https://github.com/essefsina/LocalForge/tree/cron/2026-10-18-verbose).
