@@ -102,7 +102,9 @@ items, alternating repos when possible. Never invent filler.
       PR #5 merge; the definitions only exist on PR #1's branch)
       → branch `cron/2026-10-23-health-500-fix`.
         PR: https://github.com/essefsina/LocalForge/pull/8 (opened 2026-10-23).
-- [ ] Add `tests/test_pull_api.py` — pull lifecycle tests: start, duplicate
+- [x] Add `tests/test_pull_api.py` — pull lifecycle tests: start, duplicate
       POST returns already_running, 404 for unknown model status, progress
       pct math, error when the pull stream raises, error when the stream
       ends without the model being installed
+      → branch `cron/2026-10-23-pull-api-tests`.
+        PR: https://github.com/essefsina/LocalForge/pull/9 (opened 2026-10-23).
