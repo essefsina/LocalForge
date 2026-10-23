@@ -35,17 +35,27 @@ items, alternating repos when possible. Never invent filler.
 - [x] Docstrings + type hints pass over dropit_mt.py public functions
       → branch `cron/2026-10-19-mt-docs`.
         PR: https://github.com/essefsina/DropIt/pull/5 (opened 2026-10-19).
-- [ ] Handle translation of very long files: stream results per chunk into
+- [x] Handle translation of very long files: stream results per chunk into
       the modal instead of one blocking call
-- [ ] Add a "clear translation packs" maintenance button (frees mt_models/)
-- [ ] Fix: `showSaved` modal action row on narrow screens (verify .nact
+      → branch `cron/2026-10-23-translate-stream`.
+        PR: https://github.com/essefsina/Drop/pull/10 (opened 2026-10-23).
+- [x] Add a "clear translation packs" maintenance button (frees mt_models/)
+      → branch `cron/2026-10-20-clear-packs`.
+        PR: https://github.com/essefsina/DropIt/pull/8 (opened 2026-10-20).
+- [x] Fix: `showSaved` modal action row on narrow screens (verify .nact
       wraps or scrolls correctly under 360px)
-- [ ] Log translation pack size before download; skip with a clear message
+      → branch `cron/2026-10-23-nact-narrow`.
+        PR: https://github.com/essefsina/Drop/pull/11 (opened 2026-10-23).
+- [x] Log translation pack size before download; skip with a clear message
       if the disk has insufficient space
+      → branch `cron/2026-10-20-disk-check`.
+        PR: https://github.com/essefsina/DropIt/pull/7 (opened 2026-10-20).
 - [x] Add `--version` CLI flag to dropit.py / app.py
       → branch `cron/2026-10-19-version-flag`.
         PR: https://github.com/essefsina/DropIt/pull/6 (opened 2026-10-19).
-- [ ] Rate-limit /api/aitranslate per IP (avoid one phone hammering the PC)
+- [x] Rate-limit /api/aitranslate per IP (avoid one phone hammering the PC)
+      → branch `cron/2026-10-20-rate-limit`.
+        PR: https://github.com/essefsina/DropIt/pull/9 (opened 2026-10-20).
 
 ## LocalForge
 
@@ -68,7 +78,9 @@ items, alternating repos when possible. Never invent filler.
         branch cleaned of committed .pytest_cache/__pycache__ before opening).
 - [x] Add a `--port` CLI flag to the server (already shipped in main —
       no PR needed)
-- [ ] README: add a features screenshot / demo GIF placeholder section
+- [x] README: add a features screenshot / demo GIF placeholder section
+      → branch `cron/2026-10-20-readme-shots`.
+        PR: https://github.com/essefsina/LocalForge/pull/7 (opened 2026-10-20).
 - [x] Handle Ollama version drift: check `/api/version` and warn when
       the API shape is unexpected
       → branch `cron/2026-10-18-ollama-version`
@@ -84,3 +96,13 @@ items, alternating repos when possible. Never invent filler.
       → branch `cron/2026-10-18-verbose`
         (https://github.com/essefsina/LocalForge/tree/cron/2026-10-18-verbose).
         PR: https://github.com/essefsina/LocalForge/pull/4 (opened 2026-10-18).
+- [x] Fix: `ollama.is_installed()` / `ollama.DOWNLOAD_URL` are referenced by
+      server.py (health endpoint, pull/chat 503s) but were never added to
+      ollama.py — GET /api/health returns 500 on main (regression from the
+      PR #5 merge; the definitions only exist on PR #1's branch)
+      → branch `cron/2026-10-23-health-500-fix`.
+        PR: https://github.com/essefsina/LocalForge/pull/8 (opened 2026-10-23).
+- [ ] Add `tests/test_pull_api.py` — pull lifecycle tests: start, duplicate
+      POST returns already_running, 404 for unknown model status, progress
+      pct math, error when the pull stream raises, error when the stream
+      ends without the model being installed
