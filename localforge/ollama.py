@@ -2,11 +2,13 @@
 from __future__ import annotations
 
 import os
+import shutil
 
 import httpx
 
 BASE_URL = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
 TIMEOUT = httpx.Timeout(10.0, read=300.0)
+DOWNLOAD_URL = "https://ollama.com/download"
 
 # Bypass proxy env vars: Ollama is always a localhost service, and a
 # misconfigured proxy must never break local calls.
@@ -63,6 +65,16 @@ def api_shape_warnings() -> list[str]:
                 f"(expected a JSON object with a 'models' list) — "
                 f"the server version may have changed the API")
     return warnings
+
+
+def is_installed() -> bool:
+    """True when the `ollama` binary is on PATH.
+
+    Lets the UI distinguish "Ollama isn't installed" (point the user at
+    ollama.com/download) from "installed but not running" (tell them to
+    run `ollama serve`), instead of showing a raw connection error.
+    """
+    return shutil.which("ollama") is not None
 
 
 def list_installed() -> list[dict]:
