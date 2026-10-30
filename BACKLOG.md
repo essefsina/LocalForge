@@ -136,3 +136,32 @@ items, alternating repos when possible. Never invent filler.
       cached snapshot, probe failure without cache is 503)
       → branch `cron/2026-10-25-recommend-api`.
         PR: https://github.com/essefsina/LocalForge/pull/11 (opened 2026-10-25).
+
+## New items (added 2026-10-30)
+
+## DropIt
+
+- [x] Add `tests/test_script_lang.py` — unit tests for
+      dropit_mt._script_lang (ja/ko/zh/ar/hi/bn/ru script detection,
+      Latin text returns None, below-threshold mixed text returns None,
+      empty text returns None)
+      → branch `cron/2026-10-30-script-lang`.
+        PR: https://github.com/essefsina/Drop/pull/16 (opened 2026-10-30).
+- [x] Add `tests/test_extract_text.py` — unit tests for
+      dropit_ai.extract_text (plain-text files read fully, unknown
+      extensions and missing files return "" without raising, output
+      capped at MAX_TEXT_CHARS)
+      → branch `cron/2026-10-30-extract-text`.
+        PR: https://github.com/essefsina/Drop/pull/17 (opened 2026-10-30).
+
+## LocalForge
+
+- [x] Add `tests/test_gpu_endpoint.py` — TestClient tests for
+      GET /api/gpu (no GPU returns empty list and primary None; one
+      GPU returns its to_dict fields including derived GB values)
+      → branch `cron/2026-10-30-gpu-endpoint`.
+        PR: https://github.com/essefsina/LocalForge/pull/14 (opened 2026-10-30).
+- [x] Add `tests/test_cli_host_port.py` — CLI tests that --host/--port
+      reach uvicorn.run (custom values and 127.0.0.1:8000 defaults)
+      → branch `cron/2026-10-30-cli-host-port`.
+        PR: https://github.com/essefsina/LocalForge/pull/15 (opened 2026-10-30).
