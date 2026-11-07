@@ -136,3 +136,35 @@ items, alternating repos when possible. Never invent filler.
       cached snapshot, probe failure without cache is 503)
       → branch `cron/2026-10-25-recommend-api`.
         PR: https://github.com/essefsina/LocalForge/pull/11 (opened 2026-10-25).
+
+## New items (added 2026-10-28)
+
+Note: the Drop README-screenshots item above stays pending — real
+app screenshots cannot be captured and verified in this headless VM,
+so it is skipped rather than faked.
+
+## DropIt
+
+- [x] Add `tests/test_search_stem.py` — unit tests for
+      dropit_ai._stem (plural/singular pairs the search relies on,
+      ies/es/s endings, short words unchanged, idempotence)
+      → branch `cron/2026-10-28-search-stem`.
+        PR: https://github.com/essefsina/Drop/pull/14 (opened 2026-10-28).
+- [x] Add `tests/test_is_image.py` — unit tests for
+      dropit_ai.is_image (all supported extensions, case-insensitivity,
+      non-image and extensionless names rejected)
+      → branch `cron/2026-10-28-is-image`.
+        PR: https://github.com/essefsina/Drop/pull/15 (opened 2026-10-28).
+
+## LocalForge
+
+- [x] Add `tests/test_ollama_client.py` — MockTransport tests for
+      ollama.is_available/list_installed/running/chat (up, down,
+      non-200, empty model lists)
+      → branch `cron/2026-10-28-ollama-client`.
+        PR: https://github.com/essefsina/LocalForge/pull/12 (opened 2026-10-28).
+- [x] Add `tests/test_models_endpoint.py` — TestClient tests for
+      GET /api/models (Ollama up returns installed/running lists,
+      Ollama down returns empty lists with ollama_up False)
+      → branch `cron/2026-10-28-models-endpoint`.
+        PR: https://github.com/essefsina/LocalForge/pull/13 (opened 2026-10-28).
