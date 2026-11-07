@@ -50,6 +50,18 @@ Open **http://127.0.0.1:8000** → pick your model → start chatting. That's it
 
 LocalForge reads your GPU via `nvidia-smi`, filters a hand-tuned model catalog against 85% of your VRAM (leaving headroom for your OS/display), and drives Ollama's API for pulling, listing, and chatting. The whole UI is a single dependency-free HTML page.
 
+## 📸 Screenshots & demo
+
+> 🚧 Captures coming — placeholders below. Drop PNGs in [`docs/screenshots/`](docs/screenshots/) and update the links.
+
+| Dashboard | Model recommendations | Chat playground |
+|---|---|---|
+| ![Dashboard placeholder](docs/screenshots/dashboard.png) | ![Recommendations placeholder](docs/screenshots/recommendations.png) | ![Chat placeholder](docs/screenshots/chat.png) |
+
+<!-- Demo GIF: record one pull + chat round-trip, save as docs/screenshots/demo.gif, then:
+![LocalForge demo](docs/screenshots/demo.gif)
+-->
+
 ## 🗺️ Roadmap
 
 - [ ] VRAM usage graph over time + per-model benchmarks on *your* hardware
