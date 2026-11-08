@@ -168,3 +168,128 @@ so it is skipped rather than faked.
       Ollama down returns empty lists with ollama_up False)
       → branch `cron/2026-10-28-models-endpoint`.
         PR: https://github.com/essefsina/LocalForge/pull/13 (opened 2026-10-28).
+
+## New items (added 2026-10-30)
+
+## DropIt
+
+- [x] Add `tests/test_script_lang.py` — unit tests for
+      dropit_mt._script_lang (ja/ko/zh/ar/hi/bn/ru script detection,
+      Latin text returns None, below-threshold mixed text returns None,
+      empty text returns None)
+      → branch `cron/2026-10-30-script-lang`.
+        PR: https://github.com/essefsina/Drop/pull/16 (opened 2026-10-30).
+- [x] Add `tests/test_extract_text.py` — unit tests for
+      dropit_ai.extract_text (plain-text files read fully, unknown
+      extensions and missing files return "" without raising, output
+      capped at MAX_TEXT_CHARS)
+      → branch `cron/2026-10-30-extract-text`.
+        PR: https://github.com/essefsina/Drop/pull/17 (opened 2026-10-30).
+
+## LocalForge
+
+- [x] Add `tests/test_gpu_endpoint.py` — TestClient tests for
+      GET /api/gpu (no GPU returns empty list and primary None; one
+      GPU returns its to_dict fields including derived GB values)
+      → branch `cron/2026-10-30-gpu-endpoint`.
+        PR: https://github.com/essefsina/LocalForge/pull/14 (opened 2026-10-30).
+- [x] Add `tests/test_cli_host_port.py` — CLI tests that --host/--port
+      reach uvicorn.run (custom values and 127.0.0.1:8000 defaults)
+      → branch `cron/2026-10-30-cli-host-port`.
+        PR: https://github.com/essefsina/LocalForge/pull/15 (opened 2026-10-30).
+
+## New items (added 2026-11-02)
+
+## DropIt
+
+- [x] Add `tests/test_describe.py` — unit tests for
+      dropit_ai._describe (filename normalisation, text appended and
+      capped at MAX_TEXT_CHARS, empty/whitespace/None text returns the
+      base name only)
+      → branch `cron/2026-11-02-describe`.
+        PR: https://github.com/essefsina/Drop/pull/18 (opened 2026-11-02).
+- [x] Add `tests/test_index_persist.py` — unit tests for
+      dropit_ai._save_index/_load_index round-trip (missing file and
+      corrupt file return an empty index, stale version is discarded)
+      → branch `cron/2026-11-02-index-persist`.
+        PR: https://github.com/essefsina/Drop/pull/19 (opened 2026-11-02).
+
+## LocalForge
+
+- [x] Add `tests/test_chat_endpoint.py` — TestClient tests for
+      POST /api/chat (success returns the reply, chat failure is 502,
+      Ollama-down 503s point at the download page / `ollama serve`,
+      missing fields are 422)
+      → branch `cron/2026-11-02-chat-endpoint`.
+        PR: https://github.com/essefsina/LocalForge/pull/16 (opened 2026-11-02).
+- [x] Add `tests/test_gpu_info.py` — unit tests for GPUInfo derived
+      GB properties and to_dict (rounding, free = total − used)
+      → branch `cron/2026-11-02-gpu-info`.
+        PR: https://github.com/essefsina/LocalForge/pull/17 (opened 2026-11-02).
+
+## New items (added 2026-11-07)
+
+## DropIt
+
+- [x] Add `tests/test_full_text.py` — unit tests for
+      dropit_ai.full_text (plain-text file returned in full with
+      paragraph breaks preserved, missing file and unknown extension
+      return "" without raising, empty file returns "")
+      → branch `cron/2026-11-07-full-text`.
+        PR: https://github.com/essefsina/Drop/pull/22 (opened 2026-11-07).
+- [x] Add `tests/test_pair_dir.py` — unit tests for
+      dropit_mt._pair_dir (creates mt_models/<pair> under the given
+      data_dir, returns that path, idempotent on repeat calls,
+      data_dir None resolves under the current directory)
+      → branch `cron/2026-11-07-pair-dir`.
+        PR: https://github.com/essefsina/Drop/pull/23 (opened 2026-11-07).
+
+## LocalForge
+
+- [x] Add `tests/test_pull_status.py` — TestClient tests for
+      GET /api/pull/status (unknown model is 404, pulling state
+      returns status plus pct math, zero total is 0.0 pct, done
+      state is reported as-is)
+      → branch `cron/2026-11-07-pull-status`.
+        PR: https://github.com/essefsina/LocalForge/pull/18 (opened 2026-11-07).
+- [x] Add `tests/test_index_route.py` — TestClient tests for
+      GET / (serves the dashboard HTML with a 200) and the
+      /static mount (index.html served, missing asset is 404)
+      → branch `cron/2026-11-07-index-route`.
+        PR: https://github.com/essefsina/LocalForge/pull/19 (opened 2026-11-07).
+
+## New items (added 2026-11-08)
+
+Note: the Drop README-screenshots item above stays pending — real
+app screenshots cannot be captured and verified in this headless VM,
+so it is skipped rather than faked. The four items below are new
+genuine test coverage, checked against main first to avoid
+duplicating already-covered helpers (primary_gpu, _progress_pct,
+cache round-trip, server_version/shape warnings were already tested).
+
+## DropIt
+
+- [x] Add `tests/test_tokens.py` — unit tests for
+      dropit_ai._tokens (lowercasing + stemming, punctuation splitting,
+      digits kept, CJK runs + bigrams, empty/None input)
+      → branch `cron/2026-11-08-tokens`.
+        PR: https://github.com/essefsina/Drop/pull/25 (opened 2026-11-08).
+- [x] Add `tests/test_check_space.py` — unit tests for
+      dropit_mt._mb and _check_space (MB formatting incl. truncation,
+      exact-fit passes, too-small disk raises InsufficientDiskSpace
+      with need/available figures, unknown free space stays silent)
+      → branch `cron/2026-11-08-check-space`.
+        PR: https://github.com/essefsina/Drop/pull/26 (opened 2026-11-08).
+
+## LocalForge
+
+- [x] Add `tests/test_pull_stream.py` — MockTransport tests for
+      ollama.pull_stream (NDJSON lines in order, blank lines skipped,
+      empty stream, error status raises RuntimeError, non-200 raises)
+      → branch `cron/2026-11-08-pull-stream`.
+        PR: https://github.com/essefsina/LocalForge/pull/20 (opened 2026-11-08).
+- [x] Add `tests/test_cli_version.py` — in-process tests for the
+      --version flag (prints "localforge <version>", exit 0) and
+      --help (exit 0, documents the tool, --port, --verbose)
+      → branch `cron/2026-11-08-cli-version`.
+        PR: https://github.com/essefsina/LocalForge/pull/21 (opened 2026-11-08).
